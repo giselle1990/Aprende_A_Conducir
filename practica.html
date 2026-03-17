@@ -1,506 +1,697 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Práctica Virtual - Manual Ford Ka 1999 | Profe Giselle</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Estilos específicos del juego */
-        #game-container {
-            max-width: 900px;
-            margin: 20px auto;
-            background: #222;
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        #dashboard {
-            background: #111;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 1.3em;
-        }
-        #controls {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-        }
-        .pedal {
-            width: 120px;
-            height: 120px;
-            background: #444;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2em;
-            cursor: pointer;
-            user-select: none;
-        }
-        .pedal:active { transform: scale(0.95); background: #666; }
-        #gear-shifter {
-            display: grid;
-            grid-template-columns: repeat(3, 80px);
-            grid-template-rows: repeat(3, 80px);
-            gap: 10px;
-            margin: 20px auto;
-            width: fit-content;
-        }
-        .gear-btn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #555;
-            color: white;
-            font-size: 1.8em;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        .gear-btn.active { background: #e74c3c; }
-        #status {
-            font-size: 1.4em;
-            margin: 20px 0;
-            min-height: 60px;
-        }
-        #start-btn {
-            padding: 15px 40px;
-            font-size: 1.3em;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            margin: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Práctica Virtual - Ford Ka 1999</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 12px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      padding: 10px 0 0;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+    }
+
+    .header p {
+      margin: 6px 0 0;
+      color: #ccc;
+      font-size: 0.95rem;
+    }
+
+    .dashboard {
+      background: #1b1b1b;
+      border-radius: 16px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      border: 1px solid #333;
+    }
+
+    .dash-card {
+      background: #0f0f0f;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      border: 1px solid #2f2f2f;
+    }
+
+    .dash-label {
+      font-size: 0.8rem;
+      color: #bbb;
+      margin-bottom: 6px;
+    }
+
+    .dash-value {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .status {
+      min-height: 56px;
+      background: #1b1b1b;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f3f3f3;
+    }
+
+    .middle-zone {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .gear-panel {
+      background: #1b1b1b;
+      border-radius: 16px;
+      padding: 14px;
+      border: 1px solid #333;
+    }
+
+    .gear-title {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+
+    .gear-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(56px, 1fr));
+      gap: 10px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .gear-btn {
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      border: none;
+      background: #444;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .gear-btn.active {
+      background: #e74c3c;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      min-height: 320px;
+    }
+
+    .pedal-card {
+      background: #1b1b1b;
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pedal-label {
+      text-align: center;
+      font-weight: bold;
+      color: #ddd;
+    }
+
+    .pedal-value {
+      text-align: center;
+      font-size: 1rem;
+      color: #aaa;
+    }
+
+    .pedal-zone {
+      position: relative;
+      flex: 1;
+      min-height: 230px;
+      border-radius: 16px;
+      background: linear-gradient(to top, #2e2e2e, #1a1a1a);
+      border: 1px solid #444;
+      overflow: hidden;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .pedal-fill {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 0%;
+      background: linear-gradient(to top, #27ae60, #58d68d);
+      opacity: 0.85;
+      transition: height 0.03s linear;
+    }
+
+    .pedal-fill.clutch {
+      background: linear-gradient(to top, #2980b9, #5dade2);
+    }
+
+    .pedal-guide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 10px;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button.main-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 22px;
+      background: #27ae60;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button.secondary-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 22px;
+      background: #555;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    canvas {
+      width: 100%;
+      max-width: 100%;
+      background: #0d0d0d;
+      border: 1px solid #2e2e2e;
+      border-radius: 14px;
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .dashboard {
+        grid-template-columns: repeat(5, 1fr);
+      }
+
+      .middle-zone {
+        grid-template-columns: 320px 1fr;
+        align-items: start;
+      }
+
+      .controls {
+        min-height: 380px;
+      }
+
+      .pedal-zone {
+        min-height: 320px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="nav-tabs">
-            <a href="index.html" class="nav-tab">Inicio</a>
-            <a href="tablero.html" class="nav-tab">📊 Tablero</a>
-            <a href="arrancar.html" class="nav-tab">🔑 Arrancar</a>
-            <a href="luces.html" class="nav-tab">💡 Luces</a>
-            <a href="marchas.html" class="nav-tab">⚙️ Marchas</a>
-            <a href="practica.html" class="nav-tab active">🎯 Práctica</a>
-        </nav>
-
-        <div class="header">
-            <h1>🚗 Manual Ford Ka 1999</h1>
-            <div class="subtitle">Aprendé a manejar con la Profe Giselle</div>
-        </div>
-
-        <div id="game-container">
-            <h2>¡Práctica Virtual: Manejá sin miedo!</h2>
-            <p>Simulador básico para practicar arranque, cambios de marcha y reacción a luces testigo. ¡Sin riesgo real!</p>
-
-            <div id="dashboard">
-                Velocidad: <span id="speed">0</span> km/h  
-                | RPM: <span id="rpm">0</span>  
-                | Marcha: <span id="gear">N</span>  
-                | Temperatura: <span id="temp">Normal</span>  
-                | Nafta: <span id="fuel">Lleno</span>
-            </div>
-            <div style="margin: 20px 0;">
-    <div style="margin-bottom:10px;">
-        <label>Embrague: <span id="clutch-value">100</span>%</label><br>
-        <input type="range" id="clutch-slider" min="0" max="100" value="100" style="width:300px;">
+  <div class="app">
+    <div class="header">
+      <h1>🚗 Práctica Virtual - Ford Ka 1999</h1>
+      <p>Usá dos dedos: uno para embrague y otro para acelerador</p>
     </div>
 
-    <div style="margin-bottom:10px;">
-        <label>Acelerador: <span id="throttle-value">0</span>%</label><br>
-        <input type="range" id="throttle-slider" min="0" max="100" value="0" style="width:300px;">
-    </div>
-</div>
-
-<canvas id="telemetryChart" width="760" height="220" style="background:#111;border-radius:10px;margin:20px auto;display:block;"></canvas>
-
-            <div id="controls">
-                <div class="pedal" id="clutch">Embrague</div>
-                <div class="pedal" id="accelerator">Acelerador</div>
-                <div class="pedal" id="brake">Freno</div>
-            </div>
-
-            <div id="gear-shifter">
-                <div class="gear-btn" data-gear="1">1</div>
-                <div class="gear-btn" data-gear="2">2</div>
-                <div class="gear-btn" data-gear="3">3</div>
-                <div class="gear-btn" data-gear="4">4</div>
-                <div class="gear-btn" data-gear="5">5</div>
-                <div class="gear-btn" data-gear="R">R</div>
-            </div>
-
-            <div id="status">
-                ¡Hacé clic en "Empezar Práctica" para comenzar!
-            </div>
-
-            <button id="start-btn">Empezar Práctica</button>
-        </div>
-
-        <div class="tip-box">
-            <strong>Objetivo:</strong> Llegar a 1 km sin apagar el motor, sobre-revolucionar, sobrecalentar o quedarte sin nafta.<br>
-            <strong>Reglas rápidas:</strong> Usa embrague para cambiar, acelera progresivamente, mirá el tablero y reaccioná a las luces que se enciendan.
-        </div>
+    <div class="top-actions">
+      <button id="startBtn" class="main-btn">Encender práctica</button>
+      <button id="resetBtn" class="secondary-btn">Reiniciar</button>
     </div>
 
-    <script src="js/script.js"></script>
-    <script>
-let speed = 0;
-let rpm = 900;
-let gear = 'N';
-let distance = 0;
-let gameRunning = false;
-let engineOn = false;
-let interval;
+    <div class="dashboard">
+      <div class="dash-card">
+        <div class="dash-label">Velocidad</div>
+        <div class="dash-value"><span id="speed">0</span> km/h</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">RPM</div>
+        <div class="dash-value"><span id="rpm">0</span></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Marcha</div>
+        <div class="dash-value"><span id="gear">N</span></div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Embrague</div>
+        <div class="dash-value"><span id="clutchText">100</span>%</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label">Acelerador</div>
+        <div class="dash-value"><span id="throttleText">0</span>%</div>
+      </div>
+    </div>
 
-// Controles analógicos
-let clutch = 1;   // 1 = pisado a fondo, 0 = suelto
-let throttle = 0; // 0 a 1
-let brake = 0;    // reservado por si querés mejorarlo
+    <div class="status" id="status">
+      Tocá “Encender práctica”, poné primera, acelerá un poco y soltá el embrague despacio.
+    </div>
 
-const gearRatios = {
-    '1': 3.6,
-    '2': 2.1,
-    '3': 1.4,
-    '4': 1.0,
-    '5': 0.8,
-    'R': 3.5,
-    'N': 0
-};
+    <div class="middle-zone">
+      <div class="gear-panel">
+        <div class="gear-title">Palanca de cambios</div>
+        <div class="gear-grid">
+          <button class="gear-btn" data-gear="1">1</button>
+          <button class="gear-btn" data-gear="2">2</button>
+          <button class="gear-btn" data-gear="3">3</button>
+          <button class="gear-btn" data-gear="4">4</button>
+          <button class="gear-btn" data-gear="5">5</button>
+          <button class="gear-btn" data-gear="N">N</button>
+        </div>
+      </div>
 
-const speedEl = document.getElementById('speed');
-const rpmEl = document.getElementById('rpm');
-const gearEl = document.getElementById('gear');
-const tempEl = document.getElementById('temp');
-const fuelEl = document.getElementById('fuel');
-const statusEl = document.getElementById('status');
-const startBtn = document.getElementById('start-btn');
+      <div class="controls">
+        <div class="pedal-card">
+          <div class="pedal-label">Embrague</div>
+          <div class="pedal-value">Tocá abajo = más pisado</div>
+          <div class="pedal-zone" id="clutchZone">
+            <div class="pedal-fill clutch" id="clutchFill"></div>
+            <div class="pedal-guide">Mantené el dedo y subilo despacio para soltar</div>
+          </div>
+        </div>
 
-const clutchSlider = document.getElementById('clutch-slider');
-const throttleSlider = document.getElementById('throttle-slider');
-const clutchValue = document.getElementById('clutch-value');
-const throttleValue = document.getElementById('throttle-value');
+        <div class="pedal-card">
+          <div class="pedal-label">Acelerador</div>
+          <div class="pedal-value">Tocá abajo = más aceleración</div>
+          <div class="pedal-zone" id="throttleZone">
+            <div class="pedal-fill" id="throttleFill"></div>
+            <div class="pedal-guide">Usalo con otro dedo al mismo tiempo</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-// Mini gráfico
-const canvas = document.getElementById('telemetryChart');
-const ctx = canvas.getContext('2d');
-const rpmHistory = [];
-const speedHistory = [];
-const maxHistory = 100;
+    <canvas id="chart" width="900" height="240"></canvas>
+  </div>
 
-// Temperatura / combustible
-let temperature = 90;
-let fuel = 100;
+  <script>
+    let speed = 0;
+    let rpm = 0;
+    let gear = 'N';
+    let distance = 0;
 
-// Eventos sliders
-clutchSlider.addEventListener('input', (e) => {
-    clutch = Number(e.target.value) / 100;
-    clutchValue.textContent = e.target.value;
-});
+    let engineOn = false;
+    let gameRunning = false;
 
-throttleSlider.addEventListener('input', (e) => {
-    throttle = Number(e.target.value) / 100;
-    throttleValue.textContent = e.target.value;
-});
+    // clutch: 1 = embrague totalmente pisado
+    // clutch: 0 = embrague totalmente suelto
+    let clutch = 1;
 
-// Cambios de marcha
-document.querySelectorAll('.gear-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        // Para cambiar, el embrague debe estar bastante pisado
-        if (clutch > 0.7) {
-            document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    // throttle: 0 a 1
+    let throttle = 0;
 
-            gear = btn.dataset.gear;
-            gearEl.textContent = gear;
-            statusEl.textContent = `Marcha puesta: ${gear}`;
-        } else {
-            statusEl.textContent = 'Pisá más el embrague para cambiar de marcha.';
-        }
+    let animationId = null;
+    let lastTime = null;
+
+    const gearRatios = {
+      N: 0,
+      1: 3.6,
+      2: 2.2,
+      3: 1.5,
+      4: 1.1,
+      5: 0.9
+    };
+
+    const speedEl = document.getElementById('speed');
+    const rpmEl = document.getElementById('rpm');
+    const gearEl = document.getElementById('gear');
+    const clutchText = document.getElementById('clutchText');
+    const throttleText = document.getElementById('throttleText');
+    const statusEl = document.getElementById('status');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+
+    const clutchZone = document.getElementById('clutchZone');
+    const throttleZone = document.getElementById('throttleZone');
+    const clutchFill = document.getElementById('clutchFill');
+    const throttleFill = document.getElementById('throttleFill');
+
+    const chart = document.getElementById('chart');
+    const ctx = chart.getContext('2d');
+
+    const rpmHistory = [];
+    const speedHistory = [];
+    const maxPoints = 120;
+
+    let clutchPointerId = null;
+    let throttlePointerId = null;
+
+    function updateUI() {
+      speedEl.textContent = Math.round(speed);
+      rpmEl.textContent = Math.round(rpm);
+      gearEl.textContent = gear;
+      clutchText.textContent = Math.round(clutch * 100);
+      throttleText.textContent = Math.round(throttle * 100);
+
+      clutchFill.style.height = `${clutch * 100}%`;
+      throttleFill.style.height = `${throttle * 100}%`;
+    }
+
+    function setStatus(text) {
+      statusEl.textContent = text;
+    }
+
+    function getPedalValueFromPointer(zone, clientY) {
+      const rect = zone.getBoundingClientRect();
+      let relative = (rect.bottom - clientY) / rect.height;
+      relative = Math.max(0, Math.min(1, relative));
+      return relative;
+    }
+
+    // Embrague: tocar abajo = más pisado
+    clutchZone.addEventListener('pointerdown', (e) => {
+      clutchPointerId = e.pointerId;
+      clutchZone.setPointerCapture(e.pointerId);
+
+      const val = getPedalValueFromPointer(clutchZone, e.clientY);
+      clutch = 1 - val;
+      clutch = Math.max(0, Math.min(1, clutch));
+      updateUI();
     });
-});
 
-startBtn.addEventListener('click', () => {
-    if (!gameRunning) {
-        startGame();
-    } else {
-        resetGame();
-    }
-});
+    clutchZone.addEventListener('pointermove', (e) => {
+      if (e.pointerId !== clutchPointerId) return;
+      const val = getPedalValueFromPointer(clutchZone, e.clientY);
+      clutch = 1 - val;
+      clutch = Math.max(0, Math.min(1, clutch));
+      updateUI();
+    });
 
-function startGame() {
-    gameRunning = true;
-    engineOn = true;
-    rpm = 900;
-    startBtn.textContent = 'Reiniciar';
-    statusEl.textContent = 'Motor encendido. Poné primera, acelerá un poco y soltá el embrague suave.';
-    interval = setInterval(updateGame, 100);
-}
+    clutchZone.addEventListener('pointerup', (e) => {
+      if (e.pointerId !== clutchPointerId) return;
+      clutchPointerId = null;
+    });
 
-function updateGame() {
-    if (!gameRunning) return;
+    clutchZone.addEventListener('pointercancel', (e) => {
+      if (e.pointerId !== clutchPointerId) return;
+      clutchPointerId = null;
+    });
 
-    const ratio = gearRatios[gear];
-    const inGear = gear !== 'N';
+    // Acelerador: tocar abajo = más aceleración
+    throttleZone.addEventListener('pointerdown', (e) => {
+      throttlePointerId = e.pointerId;
+      throttleZone.setPointerCapture(e.pointerId);
 
-    // Zona de fricción del embrague:
-    // clutch=1 pisado, clutch=0 suelto
-    // engagement = cuánto transmite fuerza
-    let engagement = 1 - clutch;
+      const val = getPedalValueFromPointer(throttleZone, e.clientY);
+      throttle = 1 - val;
+      throttle = Math.max(0, Math.min(1, throttle));
+      updateUI();
+    });
 
-    // Hacemos que el “punto de fricción” sea entre 0.25 y 0.55 aprox
-    let bitePoint = 0;
-    if (engagement < 0.25) {
-        bitePoint = 0;
-    } else if (engagement <= 0.55) {
-        bitePoint = (engagement - 0.25) / 0.30;
-    } else {
-        bitePoint = 1;
-    }
+    throttleZone.addEventListener('pointermove', (e) => {
+      if (e.pointerId !== throttlePointerId) return;
+      const val = getPedalValueFromPointer(throttleZone, e.clientY);
+      throttle = 1 - val;
+      throttle = Math.max(0, Math.min(1, throttle));
+      updateUI();
+    });
 
-    // RPM objetivo del motor por acelerador
-    const idleRpm = 900;
-    const throttleRpmTarget = idleRpm + throttle * 3500;
+    throttleZone.addEventListener('pointerup', (e) => {
+      if (e.pointerId !== throttlePointerId) return;
+      throttlePointerId = null;
+      throttle = 0;
+      updateUI();
+    });
 
-    // RPM "pedidas" por la transmisión según velocidad y marcha
-    let wheelDrivenRpm = idleRpm;
-    if (inGear && speed > 0) {
-        wheelDrivenRpm = 800 + speed * 90 * ratio;
-    }
+    throttleZone.addEventListener('pointercancel', (e) => {
+      if (e.pointerId !== throttlePointerId) return;
+      throttlePointerId = null;
+      throttle = 0;
+      updateUI();
+    });
 
-    if (!engineOn) {
-        rpm = 0;
-        speed *= 0.985;
-
-        if (speed < 1) speed = 0;
-
-        speedEl.textContent = Math.round(speed);
-        rpmEl.textContent = 0;
-        drawTelemetry();
-
-        return;
-    }
-
-    // Comportamiento del motor
-    if (inGear) {
-        // Mezcla entre RPM por acelerador y RPM por ruedas
-        const loadBlend = bitePoint;
-        const targetRpm = throttleRpmTarget * (1 - loadBlend) + wheelDrivenRpm * loadBlend;
-
-        // Inercia del motor
-        rpm += (targetRpm - rpm) * 0.12;
-
-        // Si está en primera y soltás embrague sin acelerar, se apaga
-        const badLaunch =
-            speed < 3 &&
-            gear === '1' &&
-            bitePoint > 0.55 &&
-            throttle < 0.12 &&
-            rpm < 950;
-
-        if (badLaunch) {
-            engineOn = false;
-            rpm = 0;
-            statusEl.textContent = 'Se apagó el motor 😅. Te faltó acelerar o soltaste muy rápido el embrague.';
+    document.querySelectorAll('.gear-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (!engineOn) {
+          setStatus('Primero encendé la práctica.');
+          return;
         }
 
-        // Fuerza motriz
-        if (engineOn) {
-            let driveForce = throttle * bitePoint * (4.8 / ratio);
-
-            // Resistencias
-            let drag = 0.03 * speed + 0.01 * speed * speed / 10;
-
-            // Si la marcha es muy alta para baja velocidad, cuesta
-            if ((gear === '3' || gear === '4' || gear === '5') && speed < 10) {
-                driveForce *= 0.4;
-            }
-
-            // Movimiento
-            speed += driveForce - drag;
-
-            // Frenado motor si soltás acelerador con marcha puesta y embrague acoplado
-            if (throttle < 0.05 && bitePoint > 0.8 && speed > 0) {
-                speed -= 0.15 * ratio;
-            }
+        // Para cambiar, embrague bien pisado
+        if (clutch < 0.7) {
+          setStatus('Para cambiar de marcha tenés que pisar bastante el embrague.');
+          return;
         }
-    } else {
-        // En neutral, motor libre
-        const targetRpm = throttleRpmTarget;
-        rpm += (targetRpm - rpm) * 0.15;
 
-        // El auto rueda y pierde velocidad
-        speed -= 0.12 + speed * 0.01;
+        document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        gear = btn.dataset.gear;
+        updateUI();
+        setStatus(`Marcha ${gear} puesta.`);
+      });
+    });
+
+    startBtn.addEventListener('click', () => {
+      if (gameRunning) return;
+
+      engineOn = true;
+      gameRunning = true;
+      rpm = 900;
+      setStatus('Motor en marcha. Poné 1ra, acelerá un poco y soltá embrague suave.');
+      updateUI();
+      lastTime = null;
+      loop();
+    });
+
+    resetBtn.addEventListener('click', resetGame);
+
+    function resetGame() {
+      engineOn = false;
+      gameRunning = false;
+      speed = 0;
+      rpm = 0;
+      gear = 'N';
+      distance = 0;
+      clutch = 1;
+      throttle = 0;
+      clutchPointerId = null;
+      throttlePointerId = null;
+      rpmHistory.length = 0;
+      speedHistory.length = 0;
+      document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
+      setStatus('Reiniciado. Tocá “Encender práctica”.');
+      updateUI();
+
+      if (animationId) cancelAnimationFrame(animationId);
+      drawChart();
     }
 
-    // Límites
-    rpm = Math.max(0, Math.min(rpm, 6500));
-    speed = Math.max(0, Math.min(speed, 140));
-
-    // Distancia
-    distance += speed / 36000; // aproximación por tick de 100ms
-
-    // Combustible
-    fuel -= 0.003 + throttle * 0.01;
-    fuel = Math.max(0, fuel);
-
-    // Temperatura
-    if (rpm > 4500) {
-        temperature += 0.08;
-    } else {
-        temperature -= 0.03;
-    }
-    temperature = Math.max(70, Math.min(temperature, 130));
-
-    // Alertas
-    if (rpm > 5500) {
-        statusEl.textContent = '¡Estás pasando mucho de vueltas! Cambiá a una marcha superior.';
-    } else if (fuel < 15) {
-        statusEl.textContent = 'Reserva de combustible encendida.';
-    } else if (temperature > 110) {
-        statusEl.textContent = 'Temperatura alta. Bajá exigencia al motor.';
-    } else if (engineOn && speed === 0 && gear === '1' && bitePoint > 0.3 && throttle > 0.08) {
-        statusEl.textContent = 'Bien, estás saliendo en primera. Soltá el embrague suave.';
+    function stallEngine(message = 'Se apagó el motor por soltar mal el embrague.') {
+      engineOn = false;
+      gameRunning = false;
+      rpm = 0;
+      speed *= 0.96;
+      setStatus(message);
+      updateUI();
+      if (animationId) cancelAnimationFrame(animationId);
     }
 
-    if (fuel <= 0) {
-        fuel = 0;
-        engineOn = false;
-        rpm = 0;
-        statusEl.textContent = 'Te quedaste sin nafta.';
+    function loop(timestamp) {
+      if (!gameRunning) return;
+
+      if (!lastTime) lastTime = timestamp;
+      const dt = Math.min((timestamp - lastTime) / 1000, 0.05);
+      lastTime = timestamp;
+
+      updatePhysics(dt);
+      updateUI();
+      drawChart();
+
+      animationId = requestAnimationFrame(loop);
     }
 
-    if (distance >= 1) {
-        clearInterval(interval);
-        statusEl.textContent = '¡Llegaste a 1 km sin errores! Aprobado por la Profe 🎉';
-        gameRunning = false;
+    function updatePhysics(dt) {
+      if (!engineOn) return;
+
+      const ratio = gearRatios[gear];
+      const inGear = gear !== 'N';
+
+      // engagement: 0 = desacoplado, 1 = totalmente acoplado
+      const engagement = 1 - clutch;
+
+      // zona realista de fricción
+      let bite = 0;
+      if (engagement < 0.2) {
+        bite = 0;
+      } else if (engagement < 0.55) {
+        bite = (engagement - 0.2) / 0.35;
+      } else {
+        bite = 1;
+      }
+
+      const idleRpm = 900;
+      const engineTargetFree = idleRpm + throttle * 3200;
+
+      let transmissionRpmTarget = idleRpm;
+      if (inGear && speed > 0.1) {
+        transmissionRpmTarget = 700 + speed * 85 * ratio;
+      }
+
+      if (gear === 'N') {
+        rpm += (engineTargetFree - rpm) * 6 * dt;
+        speed -= (0.9 + speed * 0.05) * dt;
+      } else {
+        const coupledTarget = engineTargetFree * (1 - bite) + transmissionRpmTarget * bite;
+        rpm += (coupledTarget - rpm) * 7 * dt;
+
+        let traction = throttle * bite * (5.5 / ratio);
+        let resistance = 0.35 + speed * 0.035 + (speed * speed) * 0.0025;
+
+        // marchas largas a baja velocidad penalizan
+        if ((gear === '3' || gear === '4' || gear === '5') && speed < 12) {
+          traction *= 0.45;
+        }
+
+        // primera demasiado suelta sin acelerar = se apaga
+        const launchStall =
+          gear === '1' &&
+          speed < 4 &&
+          bite > 0.55 &&
+          throttle < 0.14 &&
+          rpm < 850;
+
+        const secondGearBadShift =
+          gear === '2' &&
+          speed < 8 &&
+          bite > 0.7 &&
+          throttle < 0.1 &&
+          rpm < 800;
+
+        if (launchStall) {
+          stallEngine('Se apagó el motor: soltaste embrague en 1ra sin suficiente aceleración.');
+          return;
+        }
+
+        if (secondGearBadShift) {
+          stallEngine('Se apagó al meter 2da: te faltó acompañar con acelerador o soltaste muy brusco.');
+          return;
+        }
+
+        speed += (traction - resistance) * dt * 3.5;
+
+        // freno motor
+        if (throttle < 0.04 && bite > 0.8) {
+          speed -= ratio * 0.9 * dt;
+        }
+      }
+
+      // sobre revolución
+      if (rpm > 5800) {
+        setStatus('¡Muchas RPM! Subí de marcha.');
+      } else if (gear === '1' && speed > 0 && speed < 6 && bite > 0.2) {
+        setStatus('Bien. Seguí soltando embrague despacio.');
+      } else if (gear === '2' && speed >= 8) {
+        setStatus('Bien metida la segunda. Muy bien.');
+      }
+
+      rpm = Math.max(0, Math.min(rpm, 6500));
+      speed = Math.max(0, Math.min(speed, 140));
+      distance += speed * dt / 1000;
+
+      rpmHistory.push(rpm);
+      speedHistory.push(speed);
+      if (rpmHistory.length > maxPoints) rpmHistory.shift();
+      if (speedHistory.length > maxPoints) speedHistory.shift();
     }
 
-    updateDashboard();
-    drawTelemetry();
-}
+    function drawChart() {
+      const w = chart.width;
+      const h = chart.height;
 
-function updateDashboard() {
-    speedEl.textContent = Math.round(speed);
-    rpmEl.textContent = Math.round(rpm);
-    gearEl.textContent = gear;
-    tempEl.textContent =
-        temperature < 100 ? 'Normal' :
-        temperature < 110 ? 'Alta' : 'Peligro';
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#0d0d0d';
+      ctx.fillRect(0, 0, w, h);
 
-    fuelEl.textContent =
-        fuel > 60 ? 'Lleno' :
-        fuel > 30 ? 'Medio' :
-        fuel > 10 ? 'Bajo' : 'Reserva';
-}
+      ctx.strokeStyle = '#2b2b2b';
+      ctx.lineWidth = 1;
 
-function drawTelemetry() {
-    rpmHistory.push(rpm);
-    speedHistory.push(speed);
-
-    if (rpmHistory.length > maxHistory) rpmHistory.shift();
-    if (speedHistory.length > maxHistory) speedHistory.shift();
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Fondo
-    ctx.fillStyle = '#111';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Título
-    ctx.fillStyle = '#fff';
-    ctx.font = '16px Arial';
-    ctx.fillText('Telemetría en vivo', 20, 25);
-
-    // Ejes guía
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 1;
-    for (let i = 0; i < 5; i++) {
-        const y = 50 + i * 35;
+      for (let i = 0; i < 5; i++) {
+        const y = 30 + i * 45;
         ctx.beginPath();
         ctx.moveTo(40, y);
-        ctx.lineTo(740, y);
+        ctx.lineTo(w - 20, y);
         ctx.stroke();
+      }
+
+      ctx.fillStyle = '#fff';
+      ctx.font = '14px Arial';
+      ctx.fillText('RPM', 50, 18);
+      ctx.fillText('Velocidad', 120, 18);
+
+      // RPM
+      ctx.strokeStyle = '#e74c3c';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      rpmHistory.forEach((value, index) => {
+        const x = 40 + index * ((w - 60) / maxPoints);
+        const y = h - 20 - (value / 6500) * (h - 60);
+        if (index === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // Velocidad
+      ctx.strokeStyle = '#3498db';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      speedHistory.forEach((value, index) => {
+        const x = 40 + index * ((w - 60) / maxPoints);
+        const y = h - 20 - (value / 140) * (h - 60);
+        if (index === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
     }
 
-    // RPM
-    ctx.strokeStyle = '#e74c3c';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    rpmHistory.forEach((val, i) => {
-        const x = 40 + (i * 700 / maxHistory);
-        const y = 190 - (val / 6500) * 120;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    // Velocidad
-    ctx.strokeStyle = '#3498db';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    speedHistory.forEach((val, i) => {
-        const x = 40 + (i * 700 / maxHistory);
-        const y = 190 - (val / 140) * 120;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-
-    // Leyenda
-    ctx.fillStyle = '#e74c3c';
-    ctx.fillRect(560, 18, 12, 12);
-    ctx.fillStyle = '#fff';
-    ctx.fillText('RPM', 580, 28);
-
-    ctx.fillStyle = '#3498db';
-    ctx.fillRect(640, 18, 12, 12);
-    ctx.fillStyle = '#fff';
-    ctx.fillText('Velocidad', 660, 28);
-}
-
-function resetGame() {
-    speed = 0;
-    rpm = 900;
-    gear = 'N';
-    distance = 0;
-    gameRunning = false;
-    engineOn = false;
-    fuel = 100;
-    temperature = 90;
-
-    clearInterval(interval);
-
-    document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
-
-    clutch = 1;
-    throttle = 0;
-    clutchSlider.value = 100;
-    throttleSlider.value = 0;
-    clutchValue.textContent = 100;
-    throttleValue.textContent = 0;
-
-    speedEl.textContent = 0;
-    rpmEl.textContent = 0;
-    gearEl.textContent = 'N';
-    tempEl.textContent = 'Normal';
-    fuelEl.textContent = 'Lleno';
-    statusEl.textContent = '¡Hacé clic en "Empezar Práctica" para comenzar!';
-    startBtn.textContent = 'Empezar Práctica';
-
-    rpmHistory.length = 0;
-    speedHistory.length = 0;
-    drawTelemetry();
-}
-
-drawTelemetry();
-</script>
+    updateUI();
+    drawChart();
+  </script>
 </body>
 </html>
