@@ -23,257 +23,95 @@
     }
 
     .app {
-      width: 100%;
-      max-width: 390px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 8px;
-      gap: 8px;
-      background:
-        linear-gradient(180deg, #141821 0%, #0f1115 100%);
-    }
+  width: 100%;
+  max-width: 390px;
+  height: 100vh;
+  padding: 8px;
+  display: grid;
+  grid-template-rows:
+    auto   /* titulo */
+    auto   /* dashboard */
+    auto   /* status */
+    auto   /* botones */
+    auto   /* cambios */
+    1fr    /* pedales */
+    90px;  /* grafico abajo */
+  gap: 6px;
+}
 
-    .topbar {
-      text-align: center;
-      padding: 8px 8px 0;
-    }
-
-    .topbar h1 {
-      margin: 0;
-      font-size: 1.2rem;
-    }
-
-    .topbar p {
-      margin: 4px 0 0;
-      font-size: 0.88rem;
-      color: #b9c0cc;
-    }
-
-    .dashboard {
+/* TABLERO COMPACTO */
+.dashboard {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: 5px;
 }
 
 .card {
-  background: #1a1f2a;
-  border: 1px solid #2a3140;
-  border-radius: 10px;
-  padding: 6px 4px;
-  text-align: center;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 .label {
-  font-size: 0.62rem;
-  color: #9eabc0;
-  margin-bottom: 2px;
+  font-size: 0.6rem;
 }
 
 .value {
-  font-size: 0.92rem;
-  font-weight: bold;
+  font-size: 0.85rem;
 }
 
-    .status {
-  min-height: 40px;
-  font-size: 0.78rem;
-  line-height: 1.2;
-  padding: 8px 10px;
-  background: #1a1f2a;
-  border: 1px solid #2a3140;
-  border-radius: 12px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-    .actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn {
-      flex: 1;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 14px;
-      font-weight: bold;
-      font-size: 0.95rem;
-      color: #fff;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .btn-start { background: #27ae60; }
-    .btn-reset { background: #56606f; }
-
-    .gear-panel {
-  background: #1a1f2a;
-  border: 1px solid #2a3140;
-  border-radius: 14px;
-  padding: 8px;
-}
-
-.gear-title {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #b7c0cf;
-  margin-bottom: 6px;
-}
-
-.gear-grid.small {
-  display: grid;
-  grid-template-columns: repeat(3, 56px);
-  justify-content: center;
-  gap: 10px;
-}
-
-.gear-btn {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: none;
-  background: #3b4557;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-.gear-btn.active {
-  background: #e74c3c;
-}
-
-    .pedals-section {
-      background: #161b24;
-      border: 1px solid #2a3140;
-      border-radius: 18px;
-      padding: 12px;
-    }
-
-    .pedals-title {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #c3c9d4;
-      font-size: 0.9rem;
-    }
-
-    .pedals-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  min-height: 0;
-  height: 100%;
-}
-
-.pedal-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  min-height: 0;
-}
-
-.pedal-name {
-  font-size: 0.82rem;
-  font-weight: bold;
-}
-
-.pedal-value {
-  font-size: 0.75rem;
-  color: #95a2b8;
-}
-
-.pedal-zone {
-  width: 100%;
-  height: 100%;
-  min-height: 220px;
-  touch-action: none;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.pedal-shell {
-  width: 78%;
-  height: 100%;
-  border-radius: 18px 18px 26px 26px;
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, #4a5568 0%, #2e3642 100%);
-  border: 2px solid #6f7b8d;
-}
-
-.pedal-shell.accelerator {
-  width: 60%;
-}
-
-    .pedal-grooves {
-      position: absolute;
-      inset: 14px 10px;
-      border-radius: 14px;
-      background:
-        repeating-linear-gradient(
-          180deg,
-          rgba(255,255,255,0.10) 0 4px,
-          rgba(0,0,0,0.0) 4px 18px
-        );
-      opacity: 0.65;
-      pointer-events: none;
-    }
-
-    .pedal-fill {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 0%;
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(39,174,96,0.9));
-      transition: height 0.03s linear;
-      pointer-events: none;
-    }
-
-    .pedal-fill.clutch {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(52,152,219,0.92));
-    }
-
-    .pedal-fill.brake {
-      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(241,196,15,0.92));
-    }
-
-    .pedal-hint {
-      position: absolute;
-      bottom: 10px;
-      left: 8px;
-      right: 8px;
-      text-align: center;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.82);
-      pointer-events: none;
-      line-height: 1.2;
-    }
-
-    .chart-card {
-  background: #1a1f2a;
-  border: 1px solid #2a3140;
-  border-radius: 14px;
+/* STATUS CHICO */
+.status {
+  min-height: 36px;
+  font-size: 0.7rem;
   padding: 6px;
 }
 
-.chart-title {
-  font-size: 0.78rem;
-  margin-bottom: 4px;
-  text-align: center;
-  color: #b7c0cf;
+/* BOTONES */
+.actions .btn {
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+/* CAMBIOS CHICOS */
+.gear-grid.small {
+  grid-template-columns: repeat(3, 48px);
+  gap: 8px;
+}
+
+.gear-btn {
+  width: 48px;
+  height: 48px;
+  font-size: 0.9rem;
+}
+
+/* PEDALES MÁS CHICOS */
+.pedals-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pedal-zone {
+  height: 170px;
+}
+
+.pedal-shell {
+  width: 70%;
+  height: 100%;
+  border-radius: 14px 14px 20px 20px;
+}
+
+.pedal-shell.accelerator {
+  width: 55%;
+}
+
+/* GRÁFICO ABAJO */
+.chart-card {
+  padding: 4px;
 }
 
 canvas {
-  width: 100%;
-  height: 78px;
-  display: block;
-  background: #11161f;
-  border-radius: 10px;
+  height: 70px !important;
 }
   </style>
 </head>
@@ -337,16 +175,7 @@ canvas {
           </div>
         </div>
 
-        <div class="pedal-wrap">
-          <div class="pedal-name">Freno</div>
-          <div class="pedal-value"><span id="brakeText">0</span>%</div>
-          <div class="pedal-zone" id="brakeZone">
-            <div class="pedal-shell">
-              <div class="pedal-fill brake" id="brakeFill"></div>
-              <div class="pedal-grooves"></div>
-            </div>
-          </div>
-        </div>
+        
 
         <div class="pedal-wrap">
           <div class="pedal-name">Acelerador</div>
@@ -379,11 +208,11 @@ canvas {
     // clutch: 1 = pisado a fondo, 0 = suelto
     let clutch = 1;
     let throttle = 0;
-    let brake = 0;
+    
 
     let clutchPointerId = null;
     let throttlePointerId = null;
-    let brakePointerId = null;
+    
 
     let lastTime = null;
     let rafId = null;
@@ -513,7 +342,7 @@ canvas {
 
     bindPedal(clutchZone, 'clutch');
     bindPedal(throttleZone, 'throttle');
-    bindPedal(brakeZone, 'brake');
+    
 
     document.querySelectorAll('.gear-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -646,10 +475,7 @@ canvas {
         speed += (traction - resistance) * dt * 3.8;
       }
 
-      // freno
-      if (brake > 0) {
-        speed -= brake * 8 * dt;
-      }
+      
 
       // freno motor
       if (inGear && throttle < 0.05 && bite > 0.8) {
