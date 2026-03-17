@@ -24,12 +24,12 @@
 
     .app {
       width: 100%;
-      max-width: 430px;
+      max-width: 390px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 10px;
-      gap: 10px;
+      padding: 8px;
+      gap: 8px;
       background:
         linear-gradient(180deg, #141821 0%, #0f1115 100%);
     }
@@ -51,47 +51,43 @@
     }
 
     .dashboard {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
 
-    .card {
-      background: #1a1f2a;
-      border: 1px solid #2a3140;
-      border-radius: 14px;
-      padding: 10px;
-      text-align: center;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
-    }
+.card {
+  background: #1a1f2a;
+  border: 1px solid #2a3140;
+  border-radius: 10px;
+  padding: 6px 4px;
+  text-align: center;
+}
 
-    .label {
-      font-size: 0.72rem;
-      color: #9eabc0;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
+.label {
+  font-size: 0.62rem;
+  color: #9eabc0;
+  margin-bottom: 2px;
+}
 
-    .value {
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
+.value {
+  font-size: 0.92rem;
+  font-weight: bold;
+}
 
     .status {
-      min-height: 54px;
-      background: #1a1f2a;
-      border: 1px solid #2a3140;
-      border-radius: 14px;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #e9edf5;
-      font-size: 0.94rem;
-      line-height: 1.3;
-    }
+  min-height: 40px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  padding: 8px 10px;
+  background: #1a1f2a;
+  border: 1px solid #2a3140;
+  border-radius: 12px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
     .actions {
       display: flex;
@@ -114,43 +110,40 @@
     .btn-reset { background: #56606f; }
 
     .gear-panel {
-      background: #1a1f2a;
-      border: 1px solid #2a3140;
-      border-radius: 16px;
-      padding: 12px;
-    }
+  background: #1a1f2a;
+  border: 1px solid #2a3140;
+  border-radius: 14px;
+  padding: 8px;
+}
 
-    .gear-title {
-      text-align: center;
-      margin-bottom: 10px;
-      color: #b7c0cf;
-      font-size: 0.9rem;
-    }
+.gear-title {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #b7c0cf;
+  margin-bottom: 6px;
+}
 
-    .gear-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      max-width: 280px;
-      margin: 0 auto;
-    }
+.gear-grid.small {
+  display: grid;
+  grid-template-columns: repeat(3, 56px);
+  justify-content: center;
+  gap: 10px;
+}
 
-    .gear-btn {
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      border: none;
-      background: #3b4557;
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: bold;
-      cursor: pointer;
-      touch-action: manipulation;
-      box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
-    }
+.gear-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #3b4557;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+}
 
-    .gear-btn.active {
-      background: #e74c3c;
-    }
+.gear-btn.active {
+  background: #e74c3c;
+}
 
     .pedals-section {
       background: #161b24;
@@ -167,62 +160,54 @@
     }
 
     .pedals-row {
-      display: grid;
-      grid-template-columns: 1.15fr 0.7fr 0.95fr;
-      gap: 10px;
-      align-items: end;
-      min-height: 300px;
-    }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  min-height: 0;
+  height: 100%;
+}
 
-    .pedal-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      min-width: 0;
-    }
+.pedal-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 0;
+}
 
-    .pedal-name {
-      font-size: 0.85rem;
-      color: #cfd6e2;
-      font-weight: bold;
-    }
+.pedal-name {
+  font-size: 0.82rem;
+  font-weight: bold;
+}
 
-    .pedal-value {
-      font-size: 0.8rem;
-      color: #95a2b8;
-      min-height: 16px;
-    }
+.pedal-value {
+  font-size: 0.75rem;
+  color: #95a2b8;
+}
 
-    .pedal-zone {
-      width: 100%;
-      height: 230px;
-      position: relative;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      touch-action: none;
-      user-select: none;
-      -webkit-user-select: none;
-    }
+.pedal-zone {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  touch-action: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
 
-    .pedal-shell {
-      position: relative;
-      width: 78%;
-      height: 100%;
-      border-radius: 20px 20px 30px 30px;
-      background: linear-gradient(180deg, #4a5568 0%, #2e3642 100%);
-      border: 2px solid #6f7b8d;
-      overflow: hidden;
-      box-shadow:
-        inset 0 10px 14px rgba(255,255,255,0.06),
-        inset 0 -10px 16px rgba(0,0,0,0.25),
-        0 8px 18px rgba(0,0,0,0.25);
-    }
+.pedal-shell {
+  width: 78%;
+  height: 100%;
+  border-radius: 18px 18px 26px 26px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #4a5568 0%, #2e3642 100%);
+  border: 2px solid #6f7b8d;
+}
 
-    .pedal-shell.accelerator {
-      width: 62%;
-    }
+.pedal-shell.accelerator {
+  width: 60%;
+}
 
     .pedal-grooves {
       position: absolute;
@@ -270,26 +255,26 @@
     }
 
     .chart-card {
-      background: #1a1f2a;
-      border: 1px solid #2a3140;
-      border-radius: 16px;
-      padding: 10px;
-    }
+  background: #1a1f2a;
+  border: 1px solid #2a3140;
+  border-radius: 14px;
+  padding: 6px;
+}
 
-    .chart-title {
-      text-align: center;
-      color: #b7c0cf;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
-    }
+.chart-title {
+  font-size: 0.78rem;
+  margin-bottom: 4px;
+  text-align: center;
+  color: #b7c0cf;
+}
 
-    canvas {
-      width: 100%;
-      height: 150px;
-      display: block;
-      background: #11161f;
-      border-radius: 12px;
-    }
+canvas {
+  width: 100%;
+  height: 78px;
+  display: block;
+  background: #11161f;
+  border-radius: 10px;
+}
   </style>
 </head>
 <body>
@@ -328,16 +313,13 @@
     </div>
 
     <div class="gear-panel">
-      <div class="gear-title">Caja de cambios</div>
-      <div class="gear-grid">
-        <button class="gear-btn" data-gear="1">1</button>
-        <button class="gear-btn" data-gear="2">2</button>
-        <button class="gear-btn" data-gear="3">3</button>
-        <button class="gear-btn" data-gear="4">4</button>
-        <button class="gear-btn" data-gear="5">5</button>
-        <button class="gear-btn" data-gear="N">N</button>
-      </div>
-    </div>
+  <div class="gear-title">Cambios</div>
+  <div class="gear-grid small">
+    <button class="gear-btn" data-gear="1">1</button>
+    <button class="gear-btn" data-gear="N">N</button>
+    <button class="gear-btn" data-gear="2">2</button>
+  </div>
+</div>
 
     <div class="pedals-section">
       <div class="pedals-title">Pedales</div>
