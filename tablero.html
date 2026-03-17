@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablero - Manual Ford Ka 1999 | Profe Giselle</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="nav-tabs">
+            <a href="index.html" class="nav-tab">Inicio</a>
+            <a href="tablero.html" class="nav-tab active">📊 Tablero</a>
+            <a href="arrancar.html" class="nav-tab">🔑 Arrancar</a>
+            <a href="luces.html" class="nav-tab">💡 Luces</a>
+            <a href="marchas.html" class="nav-tab">⚙️ Marchas</a>
+            <a href="practica.html" class="nav-tab">🎯 Práctica</a>
+        </nav>
+
+        <div class="header">
+            <h1>🚗 Manual Ford Ka 1999</h1>
+            <div class="subtitle">Aprendé a manejar con la Profe Giselle</div>
+        </div>
+
+        <div id="tablero">
+            <div class="chapter-title">
+                <div class="chapter-number">01</div>
+                <div>Conociendo el Tablero de Instrumentos</div>
+            </div>
+          
+            <div class="intro-text">
+                <strong>Primero que todo, conozcamos el tablero.</strong><br><br>
+                Bienvenida/o a tu primera clase práctica con el Ford Ka 1999. Antes de girar la llave o moverte un solo centímetro, es fundamental entender este panel que tenés frente a los ojos. El tablero es el "cerebro visible" del auto: te informa la velocidad, el nivel de nafta, la temperatura del motor, si hay algún problema grave y muchas cosas más.<br><br>
+                El diseño del Ford Ka 1999 es muy sencillo, claro y sin distracciones electrónicas modernas, lo que lo hace perfecto para quienes están aprendiendo. Dominar el tablero te va a permitir mantener la mirada en la calle la mayor parte del tiempo y reaccionar rápido ante cualquier advertencia.<br><br>
+                En esta sección vamos a recorrer **todos** los elementos principales paso a paso. Prestá mucha atención, porque esta base es clave para todo lo que viene después. Cada luz e instrumento tiene su función y te puede salvar de un problema serio si lo entendés bien.
+            </div>
+
+            <div class="card">
+                <img src="https://i.ebayimg.com/images/g/8d0AAeSwpEVoU0Gt/s-l1600.webp"
+                     alt="Tablero Ford Ka 1999"
+                     class="dashboard-img">
+
+                <h3>Elementos Principales del Tablero</h3>
+
+                <!-- Todas las tarjetas completas -->
+                <div class="light-card" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🚗</div>
+                        <div>
+                            <div class="light-title">Velocímetro</div>
+                            <span class="light-type type-green">Instrumento Principal</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Es el instrumento central más grande. Indica la velocidad actual en km/h (escala hasta aproximadamente 220 km/h). La aguja negra señala tu velocidad en tiempo real.</p>
+                        <p>En la parte inferior suele haber un odómetro digital o mecánico que muestra los kilómetros totales recorridos por el auto (útil para service, garantía y control de desgaste).</p>
+                        <p><strong>Consejo de la Profe:</strong> Miralo frecuentemente pero sin quitar la vista de la ruta por mucho tiempo. Respeta siempre los límites de velocidad para evitar multas y accidentes. En ciudad mantenete entre 40-60 km/h, en ruta 80-110 km/h según la señalización.</p>
+                    </div>
+                </div>
+
+                <div class="light-card" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🎚️</div>
+                        <div>
+                            <div class="light-title">Tacómetro (Cuenta Vueltas)</div>
+                            <span class="light-type type-blue">Opcional en algunos modelos</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Mide las revoluciones por minuto (RPM) del motor. Ayuda a saber cuándo cambiar de marcha (zona roja = sobre-revolucionar, evita daños).</p>
+                        <p>En el Ka 1999 base no siempre viene, pero si tu modelo lo tiene, está a la izquierda o derecha del velocímetro.</p>
+                        <p><strong>Zona segura:</strong> Cambiá de marcha entre 2500-3500 RPM aprox. No mantengas el motor en zona roja por mucho tiempo (más de 5500-6000 RPM).</p>
+                        <p>Si no lo tenés, aprendé a escuchar el sonido del motor: cuando "grita" fuerte, es hora de subir marcha.</p>
+                    </div>
+                </div>
+
+                <div class="light-card" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">⛽</div>
+                        <div>
+                            <div class="light-title">Indicador de Combustible</div>
+                            <span class="light-type type-yellow">Control de Nafta</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Muestra el nivel de nafta en el tanque (F = Full / lleno, E = Empty / vacío). Suele estar a la derecha del velocímetro.</p>
+                        <p>Cuando se enciende la luz ámbar de reserva, te quedan aprox. 5-8 litros (unos 50-80 km de autonomía, dependiendo del manejo y si vas en ciudad o ruta).</p>
+                        <p><strong>Consejo de la Profe:</strong> Nunca esperes a que llegue a E. Cargá siempre que baje de la mitad para evitar dañar la bomba de combustible (se enfría con nafta). En ruta, llená antes de salir si ves menos de medio tanque.</p>
+                    </div>
+                </div>
+
+                <div class="light-card" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🌡️</div>
+                        <div>
+                            <div class="light-title">Temperatura del Motor</div>
+                            <span class="light-type type-red">Vital</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Indica si el motor está frío, normal o sobrecalentado. Zona azul = frío (no exijas al arrancar), zona central = normal, zona roja (H) = peligro.</p>
+                        <p>Si llega a rojo mientras manejás: detenete inmediatamente, pon balizas, apagá el motor y esperá a que se enfríe. Continuar puede fundir la junta de culata (reparación cara).</p>
+                        <p>En el Ka 1999 es un indicador analógico simple, muy importante en días calurosos, tráfico pesado o si el ventilador falla.</p>
+                    </div>
+                </div>
+
+                <!-- Batería -->
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🔋</div>
+                        <div>
+                            <div class="light-title">Luz de Batería / Sistema de Carga</div>
+                            <span class="light-type type-red">Crítico</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende si el alternador no está cargando la batería. El auto funciona solo con la batería hasta que se agote (pocos minutos o km).</p>
+                        <p><strong>Causas comunes:</strong> Correa del alternador rota/floja, alternador dañado, bornes sucios o batería vieja.</p>
+                        <p><strong>Qué hacer:</strong> Apagá radio, luces innecesarias y aire. Dirigite al taller más cercano sin demora. Si el motor se apaga en marcha, perdés dirección asistida y frenos más duros.</p>
+                    </div>
+                </div>
+
+                <!-- Aceite -->
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🛢️</div>
+                        <div>
+                            <div class="light-title">Presión de Aceite</div>
+                            <span class="light-type type-red">¡DETENERSE YA!</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Indica baja presión de aceite (falta de aceite, bomba fallada, etc.). Sin lubricación, el motor se daña irreversiblemente en minutos.</p>
+                        <p><strong>Acción inmediata:</strong> Parar en lugar seguro, apagar motor, revisar nivel de aceite con la varilla. Si está bajo, completá. Si no, grúa al taller.</p>
+                    </div>
+                </div>
+
+                <!-- Frenos -->
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">P 🚨</div>
+                        <div>
+                            <div class="light-title">Freno de Mano / Sistema de Frenos</div>
+                            <span class="light-type type-red">Advertencia Alta</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende si el freno de mano está puesto o hay falla en frenos (bajo nivel de líquido, pastillas muy gastadas).</p>
+                        <p>Si está bajado el freno de mano y la luz queda encendida: revisá líquido de frenos urgente. No manejes si sospechás falla en frenos.</p>
+                    </div>
+                </div>
+
+                <!-- Check Engine -->
+                <div class="light-card yellow" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🔧</div>
+                        <div>
+                            <div class="light-title">Check Engine (Motor)</div>
+                            <span class="light-type type-yellow">Atención Requerida</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende por falla en motor, sensores, emisiones o inyección. Puede ser desde tapa de nafta floja hasta algo grave.</p>
+                        <p><strong>Si está fija:</strong> Podés seguir manejando con cuidado, pero andá al taller pronto para leer códigos con escáner.<br><strong>Si titila:</strong> Problema serio (puede dañar catalizador). Reducí velocidad y andá al mecánico lo antes posible.</p>
+                    </div>
+                </div>
+
+                <!-- Reserva -->
+                <div class="light-card yellow" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">⛽</div>
+                        <div>
+                            <div class="light-title">Reserva de Combustible</div>
+                            <span class="light-type type-yellow">Cargar Pronto</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Luz ámbar que avisa reserva baja (5-8 litros aprox.). Tenés 50-80 km de margen, pero no lo dejes llegar a cero.</p>
+                        <p>Cargá lo antes posible para no dañar la bomba (se enfría con nafta).</p>
+                    </div>
+                </div>
+
+                <!-- Direccionales -->
+                <div class="light-card green" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">↔️</div>
+                        <div>
+                            <div class="light-title">Direccionales / Luces de Giro</div>
+                            <span class="light-type type-green">Informativa</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Titila cuando usás guiño izquierdo/derecho o balizas. Si titila muy rápido: una bombita quemada (revisá las 4 luces de giro).</p>
+                    </div>
+                </div>
+
+                <!-- Luces Altas -->
+                <div class="light-card blue" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">💡</div>
+                        <div>
+                            <div class="light-title">Luces Altas</div>
+                            <span class="light-type type-blue">Informativa</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende cuando activás luces altas (largas). Bajalas al cruzar con otro auto para no encandilar.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                Dedicale al menos 10 minutos sentado en el auto (sin encender) mirando y tocando cada parte del tablero. Cuanto más familiar te resulte, más confianza vas a tener al manejar.
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

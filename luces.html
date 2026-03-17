@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luces Testigo - Manual Ford Ka 1999 | Profe Giselle</title>
+    
+    <!-- Línea del CSS externo - ¡necesaria para que se vean los colores, tarjetas y grid! -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navegación (con "Luces" en active) -->
+        <nav class="nav-tabs">
+            <a href="index.html" class="nav-tab">Inicio</a>
+            <a href="tablero.html" class="nav-tab">📊 Tablero</a>
+            <a href="arrancar.html" class="nav-tab">🔑 Arrancar</a>
+            <a href="luces.html" class="nav-tab active">💡 Luces</a>
+            <a href="marchas.html" class="nav-tab">⚙️ Marchas</a>
+            <a href="practica.html" class="nav-tab">🎯 Práctica</a>
+        </nav>
+
+        <!-- Header (igual en todas) -->
+        <div class="header">
+            <h1>🚗 Manual Ford Ka 1999</h1>
+            <div class="subtitle">Aprendé a manejar con la Profe Giselle</div>
+        </div>
+
+        <!-- Contenido de la sección Luces -->
+        <div id="luces">
+            <div class="chapter-title" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <div class="chapter-number">03</div>
+                <div>Las Luces Testigo – El auto te habla</div>
+            </div>
+     
+            <div class="intro-text">
+                <strong>Tu Ford Ka te comunica mediante luces.</strong><br><br>
+                Estas pequeñas luces del tablero son el sistema de alerta del vehículo. Te avisan si todo está bien, si hay que prestar atención o si hay un problema grave que requiere detenerse inmediatamente.<br><br>
+                Regla básica de colores:<br>
+                • <strong>Rojo</strong> = peligro grave → detenerse ya<br>
+                • <strong>Amarillo/ámbar</strong> = advertencia → revisar pronto<br>
+                • <strong>Verde / azul</strong> = sistema activo o todo ok<br><br>
+                Al poner la llave en ON (segunda posición), todas las luces se encienden un segundo (autotest del sistema) y luego se apagan (excepto las normales como freno de mano si está puesto). Si alguna queda encendida después de arrancar el motor, o se enciende mientras manejás, prestá atención inmediata. El Ka 1999 tiene un tablero muy simple, así que estas son las principales que vas a ver.
+            </div>
+
+            <div class="lights-grid">
+                <!-- ROJAS - Peligro grave -->
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🛢️</div>
+                        <div>
+                            <div class="light-title">Presión de Aceite Baja</div>
+                            <span class="light-type type-red">¡DETENERSE YA!</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>El motor no tiene suficiente presión de aceite para lubricar las piezas internas. Sin aceite, el motor se puede fundir en minutos (daño muy caro o total).</p>
+                        <p><strong>Causas comunes:</strong> Nivel de aceite bajo, bomba de aceite fallada, fuga, filtro tapado.</p>
+                        <p><strong>Qué hacer:</strong> Parar inmediatamente en lugar seguro, apagar el motor, esperar a que se enfríe y revisar el nivel de aceite con la varilla (debajo del capó). Si está bajo, completá con el aceite correcto. Si la luz sigue encendida o el nivel está bien, no arranques: llamá a la grúa y llevá al mecánico.</p>
+                    </div>
+                </div>
+
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🔋</div>
+                        <div>
+                            <div class="light-title">Sistema de Carga (Batería)</div>
+                            <span class="light-type type-red">Crítico</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>El alternador no está cargando la batería. El auto funciona solo con la batería hasta que se agote (pocos km o minutos).</p>
+                        <p><strong>Causas comunes:</strong> Correa del alternador rota/floja, alternador dañado, bornes sucios o batería vieja.</p>
+                        <p><strong>Qué hacer:</strong> Apagá radio, luces innecesarias y aire. Dirigite al taller más cercano sin demora. Si el motor se apaga en marcha, perdés dirección asistida y frenos más duros.</p>
+                    </div>
+                </div>
+
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">P 🚨</div>
+                        <div>
+                            <div class="light-title">Freno de Mano / Frenos</div>
+                            <span class="light-type type-red">Advertencia Alta</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende si el freno de mano está puesto O hay falla en el sistema hidráulico de frenos (bajo nivel de líquido, pastillas muy gastadas).</p>
+                        <p><strong>Qué hacer:</strong> Si el freno de mano está bajado y la luz queda encendida: revisá el nivel de líquido de frenos (depósito en el compartimento motor, tapa amarilla o negra). Si está bajo, no manejes: riesgo de perder frenos. Llevá al taller urgente.</p>
+                    </div>
+                </div>
+
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🌡️</div>
+                        <div>
+                            <div class="light-title">Temperatura Alta del Motor</div>
+                            <span class="light-type type-red">¡PELIGRO!</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>El motor está sobrecalentado (aguja en zona roja o H). Continuar manejando puede fundir la junta de culata o peor.</p>
+                        <p><strong>Qué hacer:</strong> Detenete ya, pon balizas, apagá el motor y esperá a que se enfríe (puede tardar 30-60 min). No abras el radiador caliente. Revisá nivel de refrigerante cuando esté frío. Si no hay fuga visible, llamá al mecánico.</p>
+                    </div>
+                </div>
+
+                <!-- AMARILLAS - Advertencia -->
+                <div class="light-card yellow" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🔧</div>
+                        <div>
+                            <div class="light-title">Check Engine (Revisar Motor)</div>
+                            <span class="light-type type-yellow">Atención Requerida</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>El sistema detectó una falla en motor, inyección, sensores, emisiones o catalizador. Puede ser desde tapa de nafta floja hasta algo grave.</p>
+                        <p><strong>Si está fija:</strong> Podés seguir manejando con cuidado, pero andá al taller pronto para leer códigos con escáner.<br><strong>Si titila:</strong> Problema serio (puede dañar catalizador). Reducí velocidad y andá al mecánico lo antes posible.</p>
+                    </div>
+                </div>
+
+                <div class="light-card yellow" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">⛽</div>
+                        <div>
+                            <div class="light-title">Reserva de Combustible</div>
+                            <span class="light-type type-yellow">Cargar Pronto</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Quedan aprox. 5-8 litros de nafta (50-80 km de autonomía). La bomba de combustible se puede dañar si seguís con muy poca nafta (se enfría con el líquido).</p>
+                        <p><strong>Consejo:</strong> Cargá lo antes posible, idealmente antes de que se encienda esta luz.</p>
+                    </div>
+                </div>
+
+                <!-- VERDES / AZULES - Informativas -->
+                <div class="light-card green" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">↔️</div>
+                        <div>
+                            <div class="light-title">Direccionales (Giros)</div>
+                            <span class="light-type type-green">Normal</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Titila al usar guiño izquierdo/derecho o balizas (luces de emergencia).</p>
+                        <p><strong>Si titila muy rápido:</strong> Una bombita de giro quemada (revisá las 4: delanteras y traseras).</p>
+                    </div>
+                </div>
+
+                <div class="light-card blue" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">💡</div>
+                        <div>
+                            <div class="light-title">Luces Altas (Largas)</div>
+                            <span class="light-type type-blue">Informativa</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Indica que las luces altas están encendidas (para rutas oscuras). Bajalas al cruzar con otro vehículo para no encandilar al otro conductor.</p>
+                    </div>
+                </div>
+
+                <div class="light-card green" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">🚦</div>
+                        <div>
+                            <div class="light-title">Balizas (Luces de Emergencia)</div>
+                            <span class="light-type type-green">Activo</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se encienden las 4 direccionales al mismo tiempo (botón rojo con triángulo). Úsalas en emergencias, averías o cuando parás en doble fila.</p>
+                    </div>
+                </div>
+
+                <!-- Opcionales según modelo (Ka 1999 base no siempre tenía estas) -->
+                <div class="light-card red" onclick="toggleDetail(this)">
+                    <div class="light-header">
+                        <div style="font-size:2em;">💺</div>
+                        <div>
+                            <div class="light-title">Cinturón de Seguridad</div>
+                            <span class="light-type type-red">Obligatorio</span>
+                        </div>
+                    </div>
+                    <div class="light-details">
+                        <p>Se enciende (y suena "ping") si no estás abrochado el cinturón con motor encendido o en movimiento. En algunos modelos también avisa al acompañante.</p>
+                        <p><strong>Recordatorio:</strong> Abrochate siempre, reduce riesgo de muerte en accidente hasta 50-75%.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>Consejo de la Profe Giselle:</strong> Cuando prendés el auto, mirá que todas las luces rojas y amarillas se apaguen en 3-5 segundos (después del autotest). Si alguna queda encendida, no ignores: mejor prevenir que reparar caro después.
+            </div>
+        </div>
+    </div>
+
+    <!-- Línea del JS externo - ¡necesaria para que las tarjetas se expandan al clickear (función toggleDetail)! -->
+    <script src="js/script.js"></script>
+</body>
+</html>

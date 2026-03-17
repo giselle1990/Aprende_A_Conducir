@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marchas - Manual Ford Ka 1999 | Profe Giselle</title>
+    
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Navegación con "Marchas" activo -->
+        <nav class="nav-tabs">
+            <a href="index.html" class="nav-tab">Inicio</a>
+            <a href="tablero.html" class="nav-tab">📊 Tablero</a>
+            <a href="arrancar.html" class="nav-tab">🔑 Arrancar</a>
+            <a href="luces.html" class="nav-tab">💡 Luces</a>
+            <a href="marchas.html" class="nav-tab active">⚙️ Marchas</a>
+            <a href="practica.html" class="nav-tab">🎯 Práctica</a>
+        </nav>
+
+        <!-- Header -->
+        <div class="header">
+            <h1>🚗 Manual Ford Ka 1999</h1>
+            <div class="subtitle">Aprendé a manejar con la Profe Giselle</div>
+        </div>
+
+        <!-- Contenido de Marchas -->
+        <div id="marchas">
+            <div class="chapter-title" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <div class="chapter-number">04</div>
+                <div>Domando la Caja de Cambios</div>
+            </div>
+
+            <div class="intro-text">
+                <strong>La parte que más cuesta al principio… pero la más divertida cuando la dominás.</strong><br><br>
+                La caja manual de 5 marchas + reversa del Ford Ka 1999 (caja IB5 o similar) te permite controlar cuánta fuerza y velocidad querés en cada momento.<br>
+                • Marchas bajas (1ª, 2ª) → mucha fuerza, poca velocidad (arranque desde cero, subidas empinadas, tráfico lento)<br>
+                • Marchas altas (4ª, 5ª) → mucha velocidad, poca fuerza (avenidas rápidas, ruta, autopista, ahorro de nafta)<br>
+                • 3ª → punto medio, la más usada en ciudad y para pasar de lento a medio<br><br>
+                El patrón es el clásico "H" de Ford: 1-3-5 arriba, 2-4 abajo, reversa abajo a la derecha (con anillo o botón de seguridad para evitar meterla por error).<br><br>
+                Mirá la foto real de la palanca del Ka 1999 abajo, y tocá cada número del diagrama para conocer más acerca de esa marcha: velocidades aproximadas, qué sentirás en el motor y tips de la profe Giselle.
+            </div>
+
+            <div class="shifter-container">
+                <h3 style="color:white; margin-bottom:10px;">Palanca de Cambios Real - Ford Ka 1999</h3>
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_756664-MLA47724907403_102021-F.webp"
+                     alt="Palanca de cambios Ford Ka 1999 - Patrón real de 5 velocidades"
+                     class="shifter-image"
+                     style="max-width:350px; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.4); margin-bottom:20px;">
+
+                <h3 style="color:white; margin-bottom:15px;">Patrón de Cambios Interactivo</h3>
+                <div class="gear-pattern">
+                    <div class="gear-slot gear-1" onclick="showGearInfo(1)">1</div>
+                    <div class="gear-slot gear-2" onclick="showGearInfo(2)">2</div>
+                    <div class="gear-slot gear-3" onclick="showGearInfo(3)">3</div>
+                    <div class="gear-slot gear-4" onclick="showGearInfo(4)">4</div>
+                    <div class="gear-slot gear-5" onclick="showGearInfo(5)">5</div>
+                    <div class="gear-slot gear-r" onclick="showGearInfo('R')">R</div>
+                </div>
+
+                <div id="gear-info" class="gear-info">
+                    <h4>👆 Tocá una marcha arriba</h4>
+                    <p>Seleccioná un número para ver toda la info detallada: cuándo usarla, velocidades recomendadas, sensación del motor y consejos prácticos.</p>
+                </div>
+            </div>
+
+            <!-- Regla mnemotécnica de colectivos (activada) -->
+            <div class="memory-trick" style="background:#fff3cd; border:2px dashed #ffc107; padding:20px; border-radius:10px; margin:20px auto; max-width:500px; text-align:center;">
+                <h4>🚌 Regla de la Profe: "Dos colectivos en la calle"</h4>
+                <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap;">
+                    <div style="background:#ffc107; color:#212529; padding:10px 25px; border-radius:20px; font-weight:bold;">1-3-5 (Arriba)</div>
+                    <div style="background:#ffc107; color:#212529; padding:10px 25px; border-radius:20px; font-weight:bold;">2-4 (Abajo)</div>
+                </div>
+                <p style="margin-top:15px;">Reversa: abajo a la derecha, con seguridad.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS externo - necesario para showGearInfo -->
+    <script src="js/script.js"></script>
+</body>
+</html>
