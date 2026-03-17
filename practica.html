@@ -108,6 +108,19 @@
                 | Temperatura: <span id="temp">Normal</span>  
                 | Nafta: <span id="fuel">Lleno</span>
             </div>
+            <div style="margin: 20px 0;">
+    <div style="margin-bottom:10px;">
+        <label>Embrague: <span id="clutch-value">100</span>%</label><br>
+        <input type="range" id="clutch-slider" min="0" max="100" value="100" style="width:300px;">
+    </div>
+
+    <div style="margin-bottom:10px;">
+        <label>Acelerador: <span id="throttle-value">0</span>%</label><br>
+        <input type="range" id="throttle-slider" min="0" max="100" value="0" style="width:300px;">
+    </div>
+</div>
+
+<canvas id="telemetryChart" width="760" height="220" style="background:#111;border-radius:10px;margin:20px auto;display:block;"></canvas>
 
             <div id="controls">
                 <div class="pedal" id="clutch">Embrague</div>
@@ -139,103 +152,355 @@
 
     <script src="js/script.js"></script>
     <script>
-        // JavaScript del juego (agregalo al final o en js/script.js)
-        let speed = 0;
-        let rpm = 0;
-        let gear = 'N';
-        let clutchPressed = false;
-        let acceleratorPressed = false;
-        let distance = 0;
-        let gameRunning = false;
-        let interval;
+let speed = 0;
+let rpm = 900;
+let gear = 'N';
+let distance = 0;
+let gameRunning = false;
+let engineOn = false;
+let interval;
 
-        const speedEl = document.getElementById('speed');
-        const rpmEl = document.getElementById('rpm');
-        const gearEl = document.getElementById('gear');
-        const tempEl = document.getElementById('temp');
-        const fuelEl = document.getElementById('fuel');
-        const statusEl = document.getElementById('status');
-        const startBtn = document.getElementById('start-btn');
+// Controles analógicos
+let clutch = 1;   // 1 = pisado a fondo, 0 = suelto
+let throttle = 0; // 0 a 1
+let brake = 0;    // reservado por si querés mejorarlo
 
-        // Controles
-        document.getElementById('clutch').addEventListener('mousedown', () => clutchPressed = true);
-        document.getElementById('clutch').addEventListener('mouseup', () => clutchPressed = false);
-        document.getElementById('accelerator').addEventListener('mousedown', () => acceleratorPressed = true);
-        document.getElementById('accelerator').addEventListener('mouseup', () => acceleratorPressed = false);
+const gearRatios = {
+    '1': 3.6,
+    '2': 2.1,
+    '3': 1.4,
+    '4': 1.0,
+    '5': 0.8,
+    'R': 3.5,
+    'N': 0
+};
 
-        // Cambios de marcha
-        document.querySelectorAll('.gear-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                if (clutchPressed) {
-                    gear = btn.dataset.gear;
-                    gearEl.textContent = gear;
-                    statusEl.textContent = `Marcha puesta: ${gear}`;
-                } else {
-                    statusEl.textContent = '¡Pisá el embrague para cambiar!';
-                }
-            });
-        });
+const speedEl = document.getElementById('speed');
+const rpmEl = document.getElementById('rpm');
+const gearEl = document.getElementById('gear');
+const tempEl = document.getElementById('temp');
+const fuelEl = document.getElementById('fuel');
+const statusEl = document.getElementById('status');
+const startBtn = document.getElementById('start-btn');
 
-        startBtn.addEventListener('click', () => {
-            if (!gameRunning) {
-                gameRunning = true;
-                startBtn.textContent = 'Reiniciar';
-                statusEl.textContent = '¡Arrancaste! Acelerá suave y cambiá marchas.';
-                interval = setInterval(updateGame, 200);
-            } else {
-                resetGame();
-            }
-        });
+const clutchSlider = document.getElementById('clutch-slider');
+const throttleSlider = document.getElementById('throttle-slider');
+const clutchValue = document.getElementById('clutch-value');
+const throttleValue = document.getElementById('throttle-value');
 
-        function updateGame() {
-            if (!gameRunning) return;
+// Mini gráfico
+const canvas = document.getElementById('telemetryChart');
+const ctx = canvas.getContext('2d');
+const rpmHistory = [];
+const speedHistory = [];
+const maxHistory = 100;
 
-            // Simulación física básica
-            if (clutchPressed && gear !== 'N' && acceleratorPressed) {
-                rpm += 300;
-            } else if (acceleratorPressed && gear !== 'N') {
-                rpm += 150;
-                speed += 2;
-                distance += 0.02;
-            } else {
-                rpm -= 100;
-                speed -= 1;
-            }
+// Temperatura / combustible
+let temperature = 90;
+let fuel = 100;
 
-            rpm = Math.max(800, Math.min(rpm, 6000));
-            speed = Math.max(0, speed);
+// Eventos sliders
+clutchSlider.addEventListener('input', (e) => {
+    clutch = Number(e.target.value) / 100;
+    clutchValue.textContent = e.target.value;
+});
 
-            speedEl.textContent = Math.round(speed);
-            rpmEl.textContent = Math.round(rpm);
+throttleSlider.addEventListener('input', (e) => {
+    throttle = Number(e.target.value) / 100;
+    throttleValue.textContent = e.target.value;
+});
+
+// Cambios de marcha
+document.querySelectorAll('.gear-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Para cambiar, el embrague debe estar bastante pisado
+        if (clutch > 0.7) {
+            document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            gear = btn.dataset.gear;
             gearEl.textContent = gear;
-
-            // Eventos aleatorios (luces testigo)
-            if (Math.random() < 0.01) {
-                statusEl.textContent = '¡Luz de reserva encendida! Buscá nafta pronto.';
-            }
-            if (rpm > 5000) {
-                statusEl.textContent = '¡RPM muy altas! Cambiá a marcha superior o vas a dañar el motor.';
-            }
-            if (distance >= 1) {
-                clearInterval(interval);
-                statusEl.textContent = '¡Llegaste a 1 km sin errores! Aprobado por la Profe 🎉';
-                gameRunning = false;
-            }
+            statusEl.textContent = `Marcha puesta: ${gear}`;
+        } else {
+            statusEl.textContent = 'Pisá más el embrague para cambiar de marcha.';
         }
+    });
+});
 
-        function resetGame() {
-            speed = 0;
+startBtn.addEventListener('click', () => {
+    if (!gameRunning) {
+        startGame();
+    } else {
+        resetGame();
+    }
+});
+
+function startGame() {
+    gameRunning = true;
+    engineOn = true;
+    rpm = 900;
+    startBtn.textContent = 'Reiniciar';
+    statusEl.textContent = 'Motor encendido. Poné primera, acelerá un poco y soltá el embrague suave.';
+    interval = setInterval(updateGame, 100);
+}
+
+function updateGame() {
+    if (!gameRunning) return;
+
+    const ratio = gearRatios[gear];
+    const inGear = gear !== 'N';
+
+    // Zona de fricción del embrague:
+    // clutch=1 pisado, clutch=0 suelto
+    // engagement = cuánto transmite fuerza
+    let engagement = 1 - clutch;
+
+    // Hacemos que el “punto de fricción” sea entre 0.25 y 0.55 aprox
+    let bitePoint = 0;
+    if (engagement < 0.25) {
+        bitePoint = 0;
+    } else if (engagement <= 0.55) {
+        bitePoint = (engagement - 0.25) / 0.30;
+    } else {
+        bitePoint = 1;
+    }
+
+    // RPM objetivo del motor por acelerador
+    const idleRpm = 900;
+    const throttleRpmTarget = idleRpm + throttle * 3500;
+
+    // RPM "pedidas" por la transmisión según velocidad y marcha
+    let wheelDrivenRpm = idleRpm;
+    if (inGear && speed > 0) {
+        wheelDrivenRpm = 800 + speed * 90 * ratio;
+    }
+
+    if (!engineOn) {
+        rpm = 0;
+        speed *= 0.985;
+
+        if (speed < 1) speed = 0;
+
+        speedEl.textContent = Math.round(speed);
+        rpmEl.textContent = 0;
+        drawTelemetry();
+
+        return;
+    }
+
+    // Comportamiento del motor
+    if (inGear) {
+        // Mezcla entre RPM por acelerador y RPM por ruedas
+        const loadBlend = bitePoint;
+        const targetRpm = throttleRpmTarget * (1 - loadBlend) + wheelDrivenRpm * loadBlend;
+
+        // Inercia del motor
+        rpm += (targetRpm - rpm) * 0.12;
+
+        // Si está en primera y soltás embrague sin acelerar, se apaga
+        const badLaunch =
+            speed < 3 &&
+            gear === '1' &&
+            bitePoint > 0.55 &&
+            throttle < 0.12 &&
+            rpm < 950;
+
+        if (badLaunch) {
+            engineOn = false;
             rpm = 0;
-            gear = 'N';
-            distance = 0;
-            gameRunning = false;
-            clearInterval(interval);
-            speedEl.textContent = 0;
-            rpmEl.textContent = 0;
-            gearEl.textContent = 'N';
-            statusEl.textContent = '¡Hacé clic en "Empezar Práctica" para comenzar!';
-            startBtn.textContent = 'Empezar Práctica';
+            statusEl.textContent = 'Se apagó el motor 😅. Te faltó acelerar o soltaste muy rápido el embrague.';
         }
-    </script>
+
+        // Fuerza motriz
+        if (engineOn) {
+            let driveForce = throttle * bitePoint * (4.8 / ratio);
+
+            // Resistencias
+            let drag = 0.03 * speed + 0.01 * speed * speed / 10;
+
+            // Si la marcha es muy alta para baja velocidad, cuesta
+            if ((gear === '3' || gear === '4' || gear === '5') && speed < 10) {
+                driveForce *= 0.4;
+            }
+
+            // Movimiento
+            speed += driveForce - drag;
+
+            // Frenado motor si soltás acelerador con marcha puesta y embrague acoplado
+            if (throttle < 0.05 && bitePoint > 0.8 && speed > 0) {
+                speed -= 0.15 * ratio;
+            }
+        }
+    } else {
+        // En neutral, motor libre
+        const targetRpm = throttleRpmTarget;
+        rpm += (targetRpm - rpm) * 0.15;
+
+        // El auto rueda y pierde velocidad
+        speed -= 0.12 + speed * 0.01;
+    }
+
+    // Límites
+    rpm = Math.max(0, Math.min(rpm, 6500));
+    speed = Math.max(0, Math.min(speed, 140));
+
+    // Distancia
+    distance += speed / 36000; // aproximación por tick de 100ms
+
+    // Combustible
+    fuel -= 0.003 + throttle * 0.01;
+    fuel = Math.max(0, fuel);
+
+    // Temperatura
+    if (rpm > 4500) {
+        temperature += 0.08;
+    } else {
+        temperature -= 0.03;
+    }
+    temperature = Math.max(70, Math.min(temperature, 130));
+
+    // Alertas
+    if (rpm > 5500) {
+        statusEl.textContent = '¡Estás pasando mucho de vueltas! Cambiá a una marcha superior.';
+    } else if (fuel < 15) {
+        statusEl.textContent = 'Reserva de combustible encendida.';
+    } else if (temperature > 110) {
+        statusEl.textContent = 'Temperatura alta. Bajá exigencia al motor.';
+    } else if (engineOn && speed === 0 && gear === '1' && bitePoint > 0.3 && throttle > 0.08) {
+        statusEl.textContent = 'Bien, estás saliendo en primera. Soltá el embrague suave.';
+    }
+
+    if (fuel <= 0) {
+        fuel = 0;
+        engineOn = false;
+        rpm = 0;
+        statusEl.textContent = 'Te quedaste sin nafta.';
+    }
+
+    if (distance >= 1) {
+        clearInterval(interval);
+        statusEl.textContent = '¡Llegaste a 1 km sin errores! Aprobado por la Profe 🎉';
+        gameRunning = false;
+    }
+
+    updateDashboard();
+    drawTelemetry();
+}
+
+function updateDashboard() {
+    speedEl.textContent = Math.round(speed);
+    rpmEl.textContent = Math.round(rpm);
+    gearEl.textContent = gear;
+    tempEl.textContent =
+        temperature < 100 ? 'Normal' :
+        temperature < 110 ? 'Alta' : 'Peligro';
+
+    fuelEl.textContent =
+        fuel > 60 ? 'Lleno' :
+        fuel > 30 ? 'Medio' :
+        fuel > 10 ? 'Bajo' : 'Reserva';
+}
+
+function drawTelemetry() {
+    rpmHistory.push(rpm);
+    speedHistory.push(speed);
+
+    if (rpmHistory.length > maxHistory) rpmHistory.shift();
+    if (speedHistory.length > maxHistory) speedHistory.shift();
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Fondo
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Título
+    ctx.fillStyle = '#fff';
+    ctx.font = '16px Arial';
+    ctx.fillText('Telemetría en vivo', 20, 25);
+
+    // Ejes guía
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 5; i++) {
+        const y = 50 + i * 35;
+        ctx.beginPath();
+        ctx.moveTo(40, y);
+        ctx.lineTo(740, y);
+        ctx.stroke();
+    }
+
+    // RPM
+    ctx.strokeStyle = '#e74c3c';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    rpmHistory.forEach((val, i) => {
+        const x = 40 + (i * 700 / maxHistory);
+        const y = 190 - (val / 6500) * 120;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Velocidad
+    ctx.strokeStyle = '#3498db';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    speedHistory.forEach((val, i) => {
+        const x = 40 + (i * 700 / maxHistory);
+        const y = 190 - (val / 140) * 120;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Leyenda
+    ctx.fillStyle = '#e74c3c';
+    ctx.fillRect(560, 18, 12, 12);
+    ctx.fillStyle = '#fff';
+    ctx.fillText('RPM', 580, 28);
+
+    ctx.fillStyle = '#3498db';
+    ctx.fillRect(640, 18, 12, 12);
+    ctx.fillStyle = '#fff';
+    ctx.fillText('Velocidad', 660, 28);
+}
+
+function resetGame() {
+    speed = 0;
+    rpm = 900;
+    gear = 'N';
+    distance = 0;
+    gameRunning = false;
+    engineOn = false;
+    fuel = 100;
+    temperature = 90;
+
+    clearInterval(interval);
+
+    document.querySelectorAll('.gear-btn').forEach(b => b.classList.remove('active'));
+
+    clutch = 1;
+    throttle = 0;
+    clutchSlider.value = 100;
+    throttleSlider.value = 0;
+    clutchValue.textContent = 100;
+    throttleValue.textContent = 0;
+
+    speedEl.textContent = 0;
+    rpmEl.textContent = 0;
+    gearEl.textContent = 'N';
+    tempEl.textContent = 'Normal';
+    fuelEl.textContent = 'Lleno';
+    statusEl.textContent = '¡Hacé clic en "Empezar Práctica" para comenzar!';
+    startBtn.textContent = 'Empezar Práctica';
+
+    rpmHistory.length = 0;
+    speedHistory.length = 0;
+    drawTelemetry();
+}
+
+drawTelemetry();
+</script>
 </body>
 </html>
